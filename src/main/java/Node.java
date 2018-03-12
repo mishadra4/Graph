@@ -24,4 +24,12 @@ public class Node {
     public void setNodeInfo(String nodeInfo) {
         this.nodeInfo = nodeInfo;
     }
+
+    public Integer getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(Integer sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
 }
