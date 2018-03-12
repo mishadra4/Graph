@@ -1,6 +1,6 @@
 public class Node {
     NodeStatus nodeStatus;
-    String nodeInfo = "I`m node ¹";
+    String nodeInfo = "I`m node ";
 
     public Node(int orderNumber) {
         nodeStatus = NodeStatus.BLACK;
