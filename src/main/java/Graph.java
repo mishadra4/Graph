@@ -105,16 +105,16 @@ public class Graph implements Comparable<Graph> {
     /**
      * Add new node to the graph.
      */
-    public void addNode(String nodeName) {
-        List<String> names=new ArrayList<>();
-        for (Node n:nodeList
-             ) {names.add(n.toString());
+    public void addNode(Integer node, Map<Integer, Integer> paths) {
 
-        }
-        if (names.contains(nodeName)) {
+        if (node<=nodeList.size()) {
             System.out.println("node already exists.");
         }
-        nodeList.add(new Node(nodeName,nodeList.size()-1));
+        nodeList.add(new Node(node));
+        for (Integer i:paths.keySet()
+             ) {
+            addPath(node,i,paths.get(i));
+        }
     }
 }
 
