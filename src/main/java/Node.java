@@ -1,10 +1,12 @@
 public class Node {
     NodeStatus nodeStatus;
     String nodeInfo = "I`m node ";
+    Integer sequenceNumber;
 
-    public Node(int orderNumber) {
+    public Node(int sequenceNumber) {
         nodeStatus = NodeStatus.BLACK;
-        this.nodeInfo += orderNumber;
+        this.nodeInfo += sequenceNumber;
+        this.sequenceNumber = sequenceNumber;
     }
 
     public NodeStatus getNodeStatus() {
@@ -21,5 +23,13 @@ public class Node {
 
     public void setNodeInfo(String nodeInfo) {
         this.nodeInfo = nodeInfo;
+    }
+
+    public Integer getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(Integer sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 }
