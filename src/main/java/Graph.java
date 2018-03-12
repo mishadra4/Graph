@@ -12,6 +12,10 @@ public class Graph implements Comparable<Graph> {
         }
     }
 
+    public void addPath(Integer node1,Integer node2, Integer weight){
+        matrix.get(node1).set(node2,weight);
+    }
+
     public void BreadthFirstSearch(){
         Queue<Integer> nodeQueue = new PriorityQueue<>();
         int currentNode = 0;
