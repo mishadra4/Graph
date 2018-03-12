@@ -64,7 +64,7 @@ public class Graph implements Comparable<Graph> {
                 }
             }
             nodeStack.remove();
-            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//получение непосещенной вершины, смежной с текущей
+            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
 
         for (Node node : nodeList) {
@@ -99,6 +99,22 @@ public class Graph implements Comparable<Graph> {
             return -1;
         }
         return 0;
+    }
+
+
+    /**
+     * Add new node to the graph.
+     */
+    public void addNode(String nodeName) {
+        List<String> names=new ArrayList<>();
+        for (Node n:nodeList
+             ) {names.add(n.toString());
+
+        }
+        if (names.contains(nodeName)) {
+            System.out.println("node already exists.");
+        }
+        nodeList.add(new Node(nodeName,nodeList.size()-1));
     }
 }
 
