@@ -36,6 +36,36 @@ public class Graph  {
         }
     }
 
+    void DepthFirstSearch(){
+
+        int currentNode = 0;
+        Queue<Integer> nodeStack = new ArrayDeque();
+        nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
+
+        nodeStack.add(currentNode); //Open first node and push it to stack
+
+        System.out.println(nodeList.get(currentNode).getNodeInfo());
+
+
+        while(!nodeStack.isEmpty()) //cycle discovers all neighbour nodes
+        {
+            currentNode = nodeStack.peek();
+            for (int i = 0; i < nodeList.size(); i++){ //work out all ways which are going from current queue node
+                if(matrix.get(currentNode).get(i) != 0 && nodeList.get(currentNode).getNodeStatus() != NodeStatus.WHITE){
+                    nodeList.get(i).setNodeStatus(NodeStatus.GREY);
+                    nodeStack.add(i);
+                    System.out.println(nodeList.get(i).getNodeInfo());
+                }
+            }
+            nodeStack.remove();
+            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//получение непосещенной вершины, смежной с текущей
+        }
+
+        for (Node node : nodeList) {
+            node.setNodeStatus(NodeStatus.BLACK);
+        }
+    }
+
     public List<List<Integer>> getMatrix() {
         return matrix;
     }
