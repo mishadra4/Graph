@@ -11,6 +11,6 @@ public class Main {
         matrix.add(Arrays.asList(1,0,0,1));
         matrix.add(Arrays.asList(1,0,0,0));
         Graph graph = new Graph(matrix);
-        graph.DepthFirstSearch();
+        graph.BreadthFirstSearch();
     }
 }
