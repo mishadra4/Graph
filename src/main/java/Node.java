@@ -9,6 +9,12 @@ public class Node {
         this.sequenceNumber = sequenceNumber;
     }
 
+    public Node(String nodeInfo, int sequenceNumber) {
+        nodeStatus = NodeStatus.BLACK;
+        this.nodeInfo =nodeInfo+ sequenceNumber;
+        this.sequenceNumber = sequenceNumber;
+    }
+
     public NodeStatus getNodeStatus() {
         return nodeStatus;
     }
