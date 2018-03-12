@@ -26,7 +26,7 @@ public class Graph implements Comparable<Graph> {
         while(!nodeQueue.isEmpty()) { //cycle discovers all neighbour nodes
             currentNode = nodeQueue.remove();
             for (int i = 0; i < nodeList.size(); i++){ //work out all ways which are going from current queue node
-                if(matrix.get(currentNode).get(i) != 0){
+                if(matrix.get(currentNode).get(i) != 0 && nodeList.get(i).getNodeStatus() == NodeStatus.BLACK){
                     nodeList.get(i).setNodeStatus(NodeStatus.GREY);
                     if(nodeList.get(i).getNodeStatus() != NodeStatus.WHITE) {
                         nodeQueue.add(i);
@@ -46,7 +46,7 @@ public class Graph implements Comparable<Graph> {
 
         int currentNode = 0;
         Queue<Integer> nodeStack = new ArrayDeque();
-        nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
+        //nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
 
         nodeStack.add(currentNode); //Open first node and push it to stack
 
@@ -57,14 +57,16 @@ public class Graph implements Comparable<Graph> {
         {
             currentNode = nodeStack.peek();
             for (int i = 0; i < nodeList.size(); i++){ //work out all ways which are going from current queue node
-                if(matrix.get(currentNode).get(i) != 0 && nodeList.get(currentNode).getNodeStatus() != NodeStatus.WHITE){
-                    nodeList.get(i).setNodeStatus(NodeStatus.GREY);
-                    nodeStack.add(i);
+                if(matrix.get(currentNode).get(i) != 0 && nodeList.get(currentNode).getNodeStatus() == NodeStatus.BLACK){
+                    if(nodeList.get(i).getNodeStatus() == NodeStatus.BLACK) {
+                        nodeStack.add(i);
+                    }
+                    nodeList.get(i).setNodeStatus(NodeStatus.WHITE);
                     System.out.println(nodeList.get(i).getNodeInfo());
                 }
             }
             nodeStack.remove();
-            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//��������� ������������ �������, ������� � �������
+            //nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//��������� ������������ �������, ������� � �������
         }
 
         for (Node node : nodeList) {
