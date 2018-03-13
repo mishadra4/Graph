@@ -8,12 +8,15 @@ public class Main {
         matrix.add(Arrays.asList(1,0,0,1));
         matrix.add(Arrays.asList(1,0,1,0));
         Graph graph = new Graph(matrix);
-        graph.BreadthFirstSearch();
-        Map<Integer, Integer> paths=new HashMap<>();
+
+        List<Node> foundNodes = graph.breadthFirstSearch();
+        System.out.println(foundNodes);
+
+        Map<Integer, Integer> paths = new HashMap<>();
         paths.put(2,3);
-        graph.addNode(5,paths);
-        graph.BreadthFirstSearch();
+        graph.addNode(5, paths);
+        graph.breadthFirstSearch();
         System.out.println(graph.toString());
-        graph.DepthFirstSearch();
+        graph.depthFirstSearch();
     }
 }
