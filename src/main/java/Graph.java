@@ -150,13 +150,13 @@ public class Graph implements Comparable<Graph> {
      */
     public boolean removeNode(Integer node) {
 
-        if (node >= nodeList.size()) {
+        if (node >= nodeList.size() || node<=0) {
             System.out.println("node doesnt exist.");
             return false;
         }
 
-        nodeList.remove(node - 1);
-        matrix.remove(node - 1);
+        nodeList.remove(node - 1);//removind node from nodelist
+        matrix.remove(node - 1);//removing from matrix
         return true;
     }
 
