@@ -1,8 +1,9 @@
 import java.util.*;
 
+
 public class Graph implements Comparable<Graph> {
-    private List<List<Integer>> matrix = new ArrayList<>();
-    private List<Node> nodeList = new ArrayList<>();
+    List<List<Integer>> matrix = new ArrayList<>();
+    List<Node> nodeList = new ArrayList<>();
 
     public Graph(List<List<Integer>> matrix) {
         this.matrix = matrix;
@@ -11,34 +12,14 @@ public class Graph implements Comparable<Graph> {
         }
     }
 
-    public void addPath(Integer node1, Integer node2, Integer weight) {
-        matrix.get(node1 - 1).set(node2 - 1, weight);
+    public void addPath(Integer node1,Integer node2, Integer weight){
+        matrix.get(node1-1).set(node2-1,weight);
     }
-
-    public void removePath(Integer node1, Integer node2) {
+    
+    public void removePath(Integer node1,Integer node2){
         matrix.get(node1).set(node2, 0);
     }
 
-    /*
-     * Add new node to the graph.
-     */
-    public void addNode(Integer node, Map<Integer, Integer> paths) {
-        if (node <= nodeList.size()) {
-            System.out.println("Node already exists.");
-        }
-        nodeList.add(new Node(node));
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            for (Integer j : paths.keySet()) {
-                if (i == j) {
-                    list.add(i, paths.get(i));
-                    addPath(node, i, paths.get(i));
-                }
-            }
-            list.add(i, 0);
-        }
-        matrix.add(list);
-    }
 
     public List<Node> breadthFirstSearch(){
         List<Node> result = new ArrayList<>(); // result list returned by method
@@ -46,7 +27,7 @@ public class Graph implements Comparable<Graph> {
         int currentNode = 0;
         nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
         nodeQueue.add(currentNode);
-        result.add(nodeList.get(currentNode));//Open first node and push it to queue
+        System.out.println(nodeList.get(currentNode).getNodeInfo());//Open first node and push it to queue
 
         while(!nodeQueue.isEmpty()) { //cycle discovers all neighbour nodes
             currentNode = nodeQueue.remove();
@@ -56,11 +37,12 @@ public class Graph implements Comparable<Graph> {
                     if(nodeList.get(i).getNodeStatus() != NodeStatus.WHITE) {
                         nodeQueue.add(i);
                     }
-                    result.add(nodeList.get(i));
+                    System.out.println(nodeList.get(i).getNodeInfo());
                 }
             }
             nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);
         }
+
         for (Node node : nodeList) {
             node.setNodeStatus(NodeStatus.BLACK);
         }
@@ -72,8 +54,11 @@ public class Graph implements Comparable<Graph> {
         int currentNode = 0;
         Queue<Integer> nodeStack = new ArrayDeque();
         //nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
+
         nodeStack.add(currentNode); //Open first node and push it to stack
-        result.add(nodeList.get(currentNode));
+
+        System.out.println(nodeList.get(currentNode).getNodeInfo());
+
 
         while(!nodeStack.isEmpty()) //cycle discovers all neighbour nodes
         {
@@ -84,12 +69,15 @@ public class Graph implements Comparable<Graph> {
                         nodeStack.add(i);
                         //nodeList.get(i).setNodeStatus(NodeStatus.WHITE);
                     }
-                    result.add(nodeList.get(i));
+
+                    System.out.println(nodeList.get(i).getNodeInfo());
                 }
+
             }
             nodeStack.remove();
             nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);
         }
+
         for (Node node : nodeList) {
             node.setNodeStatus(NodeStatus.BLACK);
         }
@@ -129,4 +117,34 @@ public class Graph implements Comparable<Graph> {
         }
         return 0;
     }
+
+
+    /**
+     * Add new node to the graph.
+     */
+    public void addNode(Integer node, Map<Integer, Integer> paths) {
+
+        if (node <= nodeList.size()) {
+            System.out.println("node already exists.");
+        }
+        nodeList.add(new Node(node));
+        List<Integer> list = new ArrayList<>();
+        matrix.add(list);
+
+        for (int i = 0; i < node - 1; i++) {
+            for (Integer j : paths.keySet()
+                    ) {
+                if (i == j) {
+                    list.add(i, paths.get(i));
+                    addPath(node, i, paths.get(i));
+                }
+                list.add(i, 0);
+            }
+        }
+
+
+    }
+
+
 }
+

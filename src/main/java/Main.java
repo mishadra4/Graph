@@ -15,8 +15,8 @@ public class Main {
         Map<Integer, Integer> paths = new HashMap<>();
         paths.put(2,3);
         graph.addNode(5, paths);
-        graph.breadthFirstSearch();
-        System.out.println(graph.toString());
-        graph.depthFirstSearch();
+       // graph.breadthFirstSearch();
+        System.out.println(graph.matrix);
+        //graph.depthFirstSearch();
     }
 }
