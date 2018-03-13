@@ -127,18 +127,18 @@ public class Graph implements Comparable<Graph> {
         if (node <= nodeList.size()) {
             System.out.println("node already exists.");
         }
-        nodeList.add(new Node(node));
-        List<Integer> list = new ArrayList<>();
+        nodeList.add(new Node(node));//adding new node without paths
+        List<Integer> list = new ArrayList<>();//paths for this node
         matrix.add(list);
 
         for (int i = 0; i < node - 1; i++) {
             for (Integer j : paths.keySet()
                     ) {
-                if (i == j) {
-                    list.add(i, paths.get(i));
+                if (i == j) {//checking if index i equals to number of node to which we have to build path
+                    list.add(i, paths.get(i));//if yes adding weight
                     addPath(node, i, paths.get(i));
                 }
-                list.add(i, 0);
+                list.add(i, 0);//if no? adding zero
             }
         }
 
