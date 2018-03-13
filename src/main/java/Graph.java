@@ -115,6 +115,28 @@ public class Graph implements Comparable<Graph> {
         matrix.add(adjacentList);
     }
 
+    /**
+     * Remove node from the graph. Take in natural order of the node.
+     */
+    public boolean removeNode(int node) {
+        // Return false if the input value is out of the bounds of nodeList.
+        if (node <= 0 || node >= nodeList.size()) {
+            return false;
+        }
+
+        // Remove the Node from the nodeList.
+        nodeList.remove(node - 1);
+        // Remove the list of the Node from the matrix.
+        matrix.remove(node - 1);
+
+        // Iterate over lists of all nodes in matrix and delete relations with
+        // the node to be deleted.
+        for (List<Integer> list : matrix) {
+            list.remove(node - 1);
+        }
+        return true;
+    }
+
     public List<Node> breadthFirstSearch(){
         List<Node> result = new ArrayList<>(); // result list returned by method
         Queue<Integer> nodeQueue = new PriorityQueue<>();
@@ -206,54 +228,4 @@ public class Graph implements Comparable<Graph> {
         }
         return 0;
     }
-
-
-    /**
-     * Add new node to the graph.
-     */
-    public void addNode(Integer node, Map<Integer, Integer> paths) {
-
-        if (node <= nodeList.size()) {
-            System.out.println("node already exists.");
-        }
-        nodeList.add(new Node(node));//adding new node without paths
-        List<Integer> list = new ArrayList<>();//paths for this node
-        matrix.add(list);
-
-        for (int i = 0; i < node - 1; i++) {
-            for (Integer j : paths.keySet()
-                    ) {
-                if (i == j) {//checking if index i equals to number of node to which we have to build path
-                    list.add(i, paths.get(i));//if yes adding weight
-                    addPath(node, i, paths.get(i));
-                }
-                list.add(i, 0);//if no? adding zero
-            }
-        }
-
-
-    }
-
-    /**
-     * Remove node from the graph. Take in natural order of the node.
-     */
-    public boolean removeNode(int node) {
-        // Return false if the input value is out of the bounds of nodeList.
-        if (node <= 0 || node >= nodeList.size()) {
-            return false;
-        }
-
-        // Remove the Node from the nodeList.
-        nodeList.remove(node - 1);
-        // Remove the list of the Node from the matrix.
-        matrix.remove(node - 1);
-
-        // Iterate over lists of all nodes in matrix and delete relations with
-        // the node to be deleted.
-        for (List<Integer> list : matrix) {
-            list.remove(node - 1);
-        }
-        return true;
-    }
-
 }
