@@ -107,6 +107,11 @@ public class GraphTest {
         assertTrue(allNodesAreBlack);
     }
 
+    /*
+     * Test for addNode(). Check the new node's relations _to_ other nodes
+     * in matrix's list. Also, check the newly established relation _from_
+     * another node, which was existed before adding the new one.
+     */
     @Test
     public void addNode() {
         List<Integer> connectedFrom = new ArrayList<>(Arrays.asList(2));
@@ -115,5 +120,45 @@ public class GraphTest {
         assertEquals(Arrays.asList(1, 1, 0, 1, 0), graph.getMatrix().get(4));
         assertEquals(Arrays.asList(0, 0, 0, 1, 1), graph.getMatrix().get(1));
         assertEquals(5, graph.getNodeList().size());
+    }
+
+    /*
+     * Test for removeNode(). Check if the method returns false whenever
+     * it takes in the wrong parameter.
+     */
+    @Test
+    public void removeNodeWrongParameter() {
+        assertEquals(false, graph.removeNode(66));
+        assertEquals(false, graph.removeNode(-2));
+    }
+
+    /*
+     * Test for removeNode(). Check if the relations _to_ the removed node
+     * were deleted in all the other nodes in the matrix.
+     */
+    @Test
+    public void removeNode() {
+        graph.removeNode(2);
+        assertEquals(Arrays.asList(0,0,0), graph.getMatrix().get(0));
+        assertEquals(Arrays.asList(1,0,1), graph.getMatrix().get(1));
+        assertEquals(Arrays.asList(1,1,0), graph.getMatrix().get(2));
+    }
+
+    /*
+    * Test for removeNode(). Check if the size of the matrix was changed.
+    */
+    @Test
+    public void removeNodeMatrixSize() {
+        graph.removeNode(2);
+        assertEquals(3, graph.getMatrix().size());
+    }
+
+    /*
+    * Test for removeNode(). Check if the size of the nodeList was changed.
+    */
+    @Test
+    public void removeNodeNodelistSize() {
+        graph.removeNode(2);
+        assertEquals(3, graph.getNodeList().size());
     }
 }

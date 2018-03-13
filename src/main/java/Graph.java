@@ -11,6 +11,12 @@ public class Graph implements Comparable<Graph> {
         }
     }
 
+    // Constructor to create copies
+    public Graph(Graph graph) {
+        this.matrix = new ArrayList<>(graph.matrix);
+        this.nodeList = new ArrayList<>(graph.nodeList);
+    }
+
     public void addPath(Integer node1, Integer node2, Integer weight) {
         matrix.get(node1 - 1).set(node2 - 1, weight);
     }
@@ -19,7 +25,7 @@ public class Graph implements Comparable<Graph> {
         matrix.get(node1).set(node2, 0);
     }
 
-    /* Method to add a node to the graph. Take to lists: the first one with the numbers
+    /** Method to add a node to the graph. Take in to lists: the first one with the numbers
      * of nodes, _which_ will be connected to the new node. The second one with the numbers
      * of nodes, _to which_ the new node will be connected. The lists contain numbers in natural
      * order (i.e. "1" means the node with the index [0]).
@@ -58,7 +64,7 @@ public class Graph implements Comparable<Graph> {
             // because we have set the relation already).
             else {
                 for (int indexOfConnectedToListElement = 0; // It's just index of connectedTo's element!
-                    // Not the index of a node.
+                                                            // Not the index of a node.
                      indexOfConnectedToListElement < connectedTo.size();
                      indexOfConnectedToListElement++) {
                     // And here is the index of a node which should be connected to.
@@ -197,17 +203,24 @@ public class Graph implements Comparable<Graph> {
     }
 
     /**
-     * remove node to the graph with its paths.
+     * Remove node from the graph. Take in natural order of the node.
      */
-    public boolean removeNode(Integer node) {
-
-        if (node >= nodeList.size() || node<=0) {
-            System.out.println("node doesnt exist.");
+    public boolean removeNode(int node) {
+        // Return false if the input value is out of the bounds of nodeList.
+        if (node <= 0 || node >= nodeList.size()) {
             return false;
         }
 
-        nodeList.remove(node - 1);//removind node from nodelist
-        matrix.remove(node - 1);//removing from matrix
+        // Remove the Node from the nodeList.
+        nodeList.remove(node - 1);
+        // Remove the list of the Node from the matrix.
+        matrix.remove(node - 1);
+
+        // Iterate over lists of all nodes in matrix and delete relations with
+        // the node to be deleted.
+        for (List<Integer> list : matrix) {
+            list.remove(node - 1);
+        }
         return true;
     }
 
