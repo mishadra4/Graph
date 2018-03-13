@@ -13,7 +13,7 @@ public class Graph implements Comparable<Graph> {
     }
 
     public void addPath(Integer node1,Integer node2, Integer weight){
-        matrix.get(node1).set(node2,weight);
+        matrix.get(node1-1).set(node2-1,weight);
     }
     
     public void removePath(Integer node1,Integer node2){
@@ -119,10 +119,26 @@ public class Graph implements Comparable<Graph> {
             System.out.println("node already exists.");
         }
         nodeList.add(new Node(node));
-        for (Integer i:paths.keySet()
-             ) {
-            addPath(node,i,paths.get(i));
+        List<Integer> list=new ArrayList<>();
+        for (int i = 0; i <list.size() ; i++) {
+            for (Integer j:paths.keySet()
+                 ) {
+                if(i==j){
+                    list.add(i,paths.get(i));
+                    addPath(node, i, paths.get(i));
+                }
+            }
+            list.add(i,0);
         }
+        matrix.add(list);
+
+    }
+
+    @Override
+    public String toString() {
+        return "Graph{" +
+                "nodeList=" + nodeList +
+                '}';
     }
 }
 
