@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Graph implements Comparable<Graph> {
@@ -192,6 +193,49 @@ public class Graph implements Comparable<Graph> {
             node.setNodeStatus(NodeStatus.BLACK);
         }
         return result;
+    }
+    
+    /** Method to merge graph with other one and builds new path between them. 
+     * Modifies the object.
+     * @param graph graph to merge
+     * @param mergeNode1 node label from graph to build path from 
+     * @param mergeNode2 node label from parameter graph to build path to.
+     */
+    public void merge(Graph graph, int mergeNode1, int mergeNode2) {
+    	// merge matrix
+    	List<List<Integer>> newMatrix = new ArrayList<>();
+    	for(List<Integer> row : matrix) {
+    		newMatrix.add(new ArrayList<Integer>(row));
+    	}
+    	List<Integer> zeroList1 = new ArrayList<>();
+    	for(int i = 0; i < graph.matrix.size(); i++) {
+    		zeroList1.add(0);
+    	}
+    	List<Integer> zeroList2 = new ArrayList<>();
+    	for(int i = 0; i < newMatrix.size(); i++) {
+    		zeroList2.add(0);
+    	}
+    	for(List<Integer> row : newMatrix) {
+    		row.addAll(zeroList1);
+    	}
+    	for(List<Integer> row : graph.matrix) {
+    		List<Integer> newRow = new ArrayList<>();
+    		newRow.addAll(zeroList2);
+    		newRow.addAll(row);
+    		newMatrix.add(newRow);
+    	}
+    	
+    	this.matrix = newMatrix;
+    	
+    	//merge nodeList
+    	int oldSize = nodeList.size();
+    	for(Node newNode : graph.nodeList) {
+    		nodeList.add(new Node(newNode.getLabel()+oldSize));
+    	}
+    	
+    	//add Path
+    	addPath(mergeNode1, mergeNode2+oldSize, 1);
+    	
     }
 
     public List<List<Integer>> getMatrix() {
