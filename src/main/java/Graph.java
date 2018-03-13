@@ -57,16 +57,18 @@ public class Graph implements Comparable<Graph> {
         {
             currentNode = nodeStack.peek();
             for (int i = 0; i < nodeList.size(); i++){ //work out all ways which are going from current queue node
-                if(matrix.get(currentNode).get(i) != 0 && nodeList.get(currentNode).getNodeStatus() == NodeStatus.BLACK){
+                if(matrix.get(currentNode).get(i) != 0 && nodeList.get(i).getNodeStatus() == NodeStatus.BLACK){
                     if(nodeList.get(i).getNodeStatus() == NodeStatus.BLACK) {
                         nodeStack.add(i);
+                        //nodeList.get(i).setNodeStatus(NodeStatus.WHITE);
                     }
-                    nodeList.get(i).setNodeStatus(NodeStatus.WHITE);
+
                     System.out.println(nodeList.get(i).getNodeInfo());
                 }
+
             }
             nodeStack.remove();
-            //nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//��������� ������������ �������, ������� � �������
+            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//��������� ������������ �������, ������� � �������
         }
 
         for (Node node : nodeList) {
