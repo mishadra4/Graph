@@ -72,7 +72,7 @@ public class Graph implements Comparable<Graph> {
 
             }
             nodeStack.remove();
-            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);//��������� ������������ �������, ������� � �������
+            nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);
         }
 
         for (Node node : nodeList) {
