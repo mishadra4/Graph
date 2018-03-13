@@ -104,5 +104,21 @@ public class Graph implements Comparable<Graph> {
         }
         return 0;
     }
+
+
+    /**
+     * Add new node to the graph.
+     */
+    public void addNode(Integer node, Map<Integer, Integer> paths) {
+
+        if (node<=nodeList.size()) {
+            System.out.println("node already exists.");
+        }
+        nodeList.add(new Node(node));
+        for (Integer i:paths.keySet()
+             ) {
+            addPath(node,i,paths.get(i));
+        }
+    }
 }
 
