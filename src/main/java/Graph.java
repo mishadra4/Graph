@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class Graph implements Comparable<Graph> {
     List<List<Integer>> matrix = new ArrayList<>();
     List<Node> nodeList = new ArrayList<>();
@@ -44,16 +43,13 @@ public class Graph implements Comparable<Graph> {
         return result;
     }
 
-    public void DepthFirstSearch(){
-
+    public List<Node> DepthFirstSearch(){
+        List<Node> result = new ArrayList<>(); // result list returned by method
         int currentNode = 0;
         Queue<Integer> nodeStack = new ArrayDeque();
         //nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
-
         nodeStack.add(currentNode); //Open first node and push it to stack
-
-        System.out.println(nodeList.get(currentNode).getNodeInfo());
-
+        result.add(nodeList.get(currentNode));
 
         while(!nodeStack.isEmpty()) //cycle discovers all neighbour nodes
         {
@@ -64,7 +60,7 @@ public class Graph implements Comparable<Graph> {
                         nodeStack.add(i);
                     }
                     nodeList.get(i).setNodeStatus(NodeStatus.WHITE);
-                    System.out.println(nodeList.get(i).getNodeInfo());
+                    result.add(nodeList.get(i));
                 }
             }
             nodeStack.remove();
@@ -74,6 +70,7 @@ public class Graph implements Comparable<Graph> {
         for (Node node : nodeList) {
             node.setNodeStatus(NodeStatus.BLACK);
         }
+        return result;
     }
 
     public List<List<Integer>> getMatrix() {
@@ -95,7 +92,6 @@ public class Graph implements Comparable<Graph> {
     @Override
     public int compareTo(Graph o) {
         if (this.getNodeList().size() > o.getNodeList().size()) {
-
             return 1;
         } else if (this.getNodeList().size() < o.getNodeList().size()) {
             return -1;
