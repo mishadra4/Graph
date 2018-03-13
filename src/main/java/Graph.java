@@ -27,7 +27,7 @@ public class Graph implements Comparable<Graph> {
         int currentNode = 0;
         nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
         nodeQueue.add(currentNode);
-        System.out.println(nodeList.get(currentNode).getNodeInfo());//Open first node and push it to queue
+        result.add(nodeList.get(currentNode));//Open first node and push it to queue
 
         while(!nodeQueue.isEmpty()) { //cycle discovers all neighbour nodes
             currentNode = nodeQueue.remove();
@@ -37,7 +37,7 @@ public class Graph implements Comparable<Graph> {
                     if(nodeList.get(i).getNodeStatus() != NodeStatus.WHITE) {
                         nodeQueue.add(i);
                     }
-                    System.out.println(nodeList.get(i).getNodeInfo());
+                    result.add(nodeList.get(i));
                 }
             }
             nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);
@@ -57,7 +57,7 @@ public class Graph implements Comparable<Graph> {
 
         nodeStack.add(currentNode); //Open first node and push it to stack
 
-        System.out.println(nodeList.get(currentNode).getNodeInfo());
+        result.add(nodeList.get(currentNode));
 
 
         while(!nodeStack.isEmpty()) //cycle discovers all neighbour nodes
@@ -70,7 +70,7 @@ public class Graph implements Comparable<Graph> {
                         //nodeList.get(i).setNodeStatus(NodeStatus.WHITE);
                     }
 
-                    System.out.println(nodeList.get(i).getNodeInfo());
+                    result.add(nodeList.get(i));
                 }
 
             }
