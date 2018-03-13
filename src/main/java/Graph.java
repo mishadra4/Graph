@@ -23,7 +23,7 @@ public class Graph implements Comparable<Graph> {
     }
 
     public void removePath(Integer node1, Integer node2) {
-        matrix.get(node1).set(node2, 0);
+        matrix.get(node1-1).set(node2-1, 0);
     }
 
     /*
@@ -195,7 +195,7 @@ public class Graph implements Comparable<Graph> {
         return result;
     }
     
-    /** Method to merge graph with other one and builds new path between them. 
+    /** Method to merge graph with other one and build new path between them. 
      * Modifies the object.
      * @param graph graph to merge
      * @param mergeNode1 node label from graph to build path from 
