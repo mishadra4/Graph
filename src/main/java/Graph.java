@@ -25,26 +25,32 @@ public class Graph implements Comparable<Graph> {
         matrix.get(node1).set(node2, 0);
     }
 
-    /** Method to add a node to the graph. Take in two lists: the first one with the numbers
-     * of nodes, _which_ will be connected to the new node. The second one with the numbers
-     * of nodes, _to which_ the new node will be connected. The lists contain numbers in natural
-     * order (i.e. "1" means the node with the index [0]).
+    /** Method to add a node to the graph. Take in sequence number (like a label of node)
+     * and two lists: the first one with the numbers of nodes, _which_ will be connected to
+     * the new node. The second one with the numbers of nodes, _to which_ the new node
+     * will be connected. The lists contain numbers in natural order (i.e. "1" means the
+     * node with the index [0]).
      */
-    public void addNode(List<Integer> connectedFrom, List<Integer> connectedTo) {
-        // Create new Node with sequenceNumber = nodeList.size + 1 and add it to nodeList.
-        // I.e. if there were 5 nodes, the new node will be the 6th
-        nodeList.add(new Node(nodeList.size() + 1));
+    public void addNode(int sequenceNumber, List<Integer> connectedFrom, List<Integer> connectedTo) {
+        // Create new Node
+        nodeList.add(new Node(sequenceNumber));
 
         // Iterate over all existing nodes (except the new one).
         // If a node is present in connectedFrom list from parameters, the relation with the new node
         // will be set as "1" in the matrix. Otherwise, as "0".
         for (int nodeIndex = 0; nodeIndex < nodeList.size() - 1; nodeIndex++) {
-            for (Integer indexOfConnectedFromNode : connectedFrom) {
-                if (nodeIndex == indexOfConnectedFromNode.intValue() - 1) {
-                    matrix.get(nodeIndex).add(1);
-                } else{
-                    matrix.get(nodeIndex).add(0);
+            if(!connectedFrom.isEmpty()){
+                for (Integer indexOfConnectedFromNode : connectedFrom) {
+                    if (nodeIndex == indexOfConnectedFromNode.intValue() - 1) {
+                        matrix.get(nodeIndex).add(1);
+                    } else{
+                        matrix.get(nodeIndex).add(0);
+                    }
                 }
+            }
+            // If connectedFrom is empty, set the relation from existing nodes to the new one as "0".
+            else {
+                matrix.get(nodeIndex).add(0);
             }
         }
         // Create new List that will indicate to which nodes the new node is connected.

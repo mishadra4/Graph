@@ -116,9 +116,19 @@ public class GraphTest {
     public void addNode() {
         List<Integer> connectedFrom = new ArrayList<>(Arrays.asList(2));
         List<Integer> connectedTo = new ArrayList<>(Arrays.asList(1, 2, 4));
-        graph.addNode(connectedFrom, connectedTo);
+        graph.addNode(5, connectedFrom, connectedTo);
         assertEquals(Arrays.asList(1, 1, 0, 1, 0), graph.getMatrix().get(4));
         assertEquals(Arrays.asList(0, 0, 0, 1, 1), graph.getMatrix().get(1));
+        assertEquals(5, graph.getNodeList().size());
+    }
+
+    @Test
+    public void addNodeWithEmptyLists() {
+        List<Integer> connectedFrom = new ArrayList<>();
+        List<Integer> connectedTo = new ArrayList<>();
+        graph.addNode(5, connectedFrom, connectedTo);
+        assertEquals(Arrays.asList(0, 0, 0, 0, 0), graph.getMatrix().get(4));
+        assertEquals(Arrays.asList(0, 0, 0, 1, 0), graph.getMatrix().get(1));
         assertEquals(5, graph.getNodeList().size());
     }
 
