@@ -15,9 +15,9 @@ public class Main {
         paths.put(2, 3);
         graph.addNode(5, paths);
 
-        System.out.println(graph.matrix);
+        System.out.println(graph.toString());
         graph.removeNode(2);
-        System.out.println(graph.matrix);
+        System.out.println(graph.toString());
 
 
     }

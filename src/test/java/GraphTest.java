@@ -109,13 +109,11 @@ public class GraphTest {
 
     @Test
     public void addNode() {
-        List<Integer> connectedFrom = new ArrayList<>();
-        connectedFrom.add(2);
-        List<Integer> connectedTo = new ArrayList<>();
-        connectedTo.add(1);
-        connectedTo.add(3);
-        connectedTo.add(4);
+        List<Integer> connectedFrom = new ArrayList<>(Arrays.asList(2));
+        List<Integer> connectedTo = new ArrayList<>(Arrays.asList(1, 2, 4));
         graph.addNode(connectedFrom, connectedTo);
-        System.out.println( graph);
+        assertEquals(Arrays.asList(1, 1, 0, 1, 0), graph.getMatrix().get(4));
+        assertEquals(Arrays.asList(0, 0, 0, 1, 1), graph.getMatrix().get(1));
+        assertEquals(5, graph.getNodeList().size());
     }
 }
