@@ -28,7 +28,7 @@ public class Graph implements Comparable<Graph> {
         }
         nodeList.add(new Node(node));
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < nodeList.size(); i++) {
             for (Integer j : paths.keySet()) {
                 if (i == j) {
                     list.add(i, paths.get(i));
@@ -38,6 +38,64 @@ public class Graph implements Comparable<Graph> {
             list.add(i, 0);
         }
         matrix.add(list);
+    }
+
+    /* Method to add a node to the graph. Take to lists: the first one with the numbers
+     * of nodes, _which_ will be connected to the new node. The second one with the numbers
+     * of nodes, _to which_ the new node will be connected. The lists contain numbers in natural
+     * order (i.e. "1" means the node with the index [0]).
+     */
+    public void addNode(List<Integer> connectedFrom, List<Integer> connectedTo) {
+        // Create new Node with sequenceNumber = nodeList.size + 1 and add it to nodeList.
+        // I.e. if there were 5 nodes, the new node will be the 6th
+        nodeList.add(new Node(nodeList.size() + 1));
+
+        // Iterate over all existing nodes (except the new one).
+        // If a node is present in connectedFrom list from parameters, the relation with the new node
+        // will be set as "1" in the matrix. Otherwise, as "0".
+        for (int nodeIndex = 0; nodeIndex < nodeList.size() - 1; nodeIndex++) {
+            for (Integer indexOfConnectedFromNode : connectedFrom) {
+                if (nodeIndex == indexOfConnectedFromNode.intValue() - 1) {
+                    matrix.get(nodeIndex).add(1);
+                } else{
+                    matrix.get(nodeIndex).add(0);
+                }
+            }
+        }
+        // Create new List that will indicate to which nodes the new node is connected.
+        // This list will be added to the matrix List.
+        List<Integer> adjacentList = new ArrayList<>();
+
+        // Iterate over all Nodes and check if the index of a node is present in connectedTo list
+        // from parameters.
+        for (int nodeIndex = 0; nodeIndex < nodeList.size(); nodeIndex++) {
+            // If the connectedTo list is empty, set the relation with the current iterated node as "0".
+            if(connectedTo.isEmpty()){
+                adjacentList.add(0);
+                continue;
+            }
+            // Otherwise, iterate over the connectedTo list and check if the node is present in this list.
+            // If present, set the relation as "1" and remove the node from connectedTo (it's unnecessary now,
+            // because we have set the relation already).
+            else {
+                for (int indexOfConnectedToListElement = 0; // It's just index of connectedTo's element!
+                                                            // Not the index of a node.
+                     indexOfConnectedToListElement < connectedTo.size();
+                     indexOfConnectedToListElement++) {
+                    // And here is the index of a node which should be connected to.
+                    int indexOfConnectedToNode = connectedTo.get(indexOfConnectedToListElement) - 1;
+                    if (nodeIndex == indexOfConnectedToNode) {
+                        adjacentList.add(1);
+                        connectedTo.remove(indexOfConnectedToListElement);
+                    } else {
+                        adjacentList.add(0);
+                    }
+                    break;
+                }
+            }
+        }
+        // Finally, add the list with connectedTo relations to the matrix.
+        matrix.add(adjacentList);
     }
 
     public List<Node> breadthFirstSearch(){
@@ -115,7 +173,8 @@ public class Graph implements Comparable<Graph> {
     @Override
     public String toString() {
         return "Graph{" +
-                "nodeList=" + nodeList +
+                "matrix=" + matrix +
+                ", nodeList=" + nodeList +
                 '}';
     }
 

@@ -11,10 +11,10 @@ public class GraphTest {
     @Before
     public void testSetUp() {
         List<List<Integer>> matrix = new ArrayList<>();
-        matrix.add(Arrays.asList(0,1,0,0));
-        matrix.add(Arrays.asList(0,0,0,1));
-        matrix.add(Arrays.asList(1,0,0,1));
-        matrix.add(Arrays.asList(1,0,1,0));
+        matrix.add(new ArrayList<>(Arrays.asList(0,1,0,0)));
+        matrix.add(new ArrayList<>(Arrays.asList(0,0,0,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,0,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,1,0)));
         graph = new Graph(matrix);
     }
 
@@ -107,10 +107,15 @@ public class GraphTest {
         assertTrue(allNodesAreBlack);
     }
 
-//    @Test
-//    public void addNode() {
-//        Map<Integer, Integer> paths = new HashMap<>();
-//        paths.put(2,3);
-//        graph.addNode(5, paths);
-//    }
+    @Test
+    public void addNode() {
+        List<Integer> connectedFrom = new ArrayList<>();
+        connectedFrom.add(2);
+        List<Integer> connectedTo = new ArrayList<>();
+        connectedTo.add(1);
+        connectedTo.add(3);
+        connectedTo.add(4);
+        graph.addNode(connectedFrom, connectedTo);
+        System.out.println( graph);
+    }
 }
