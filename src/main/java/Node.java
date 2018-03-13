@@ -1,6 +1,6 @@
 public class Node {
     NodeStatus nodeStatus;
-    String nodeInfo = "I`m node ";
+    String nodeInfo = "Node #";
     Integer sequenceNumber;
 
     public Node(int sequenceNumber) {
@@ -37,5 +37,12 @@ public class Node {
 
     public void setSequenceNumber(Integer sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "nodeInfo='" + nodeInfo + '\'' +
+                '}';
     }
 }

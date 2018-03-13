@@ -16,12 +16,13 @@ public class Graph implements Comparable<Graph> {
         matrix.get(node1).set(node2,weight);
     }
 
-    public void BreadthFirstSearch(){
+    public List<Node> BreadthFirstSearch(){
+        List<Node> result = new ArrayList<>(); // result list returned by method
         Queue<Integer> nodeQueue = new PriorityQueue<>();
         int currentNode = 0;
         nodeList.get(currentNode).setNodeStatus(NodeStatus.GREY);
         nodeQueue.add(currentNode);
-        System.out.println(nodeList.get(currentNode).getNodeInfo());//Open first node and push it to queue
+        result.add(nodeList.get(currentNode));//Open first node and push it to queue
 
         while(!nodeQueue.isEmpty()) { //cycle discovers all neighbour nodes
             currentNode = nodeQueue.remove();
@@ -31,7 +32,7 @@ public class Graph implements Comparable<Graph> {
                     if(nodeList.get(i).getNodeStatus() != NodeStatus.WHITE) {
                         nodeQueue.add(i);
                     }
-                    System.out.println(nodeList.get(i).getNodeInfo());
+                    result.add(nodeList.get(i));
                 }
             }
             nodeList.get(currentNode).setNodeStatus(NodeStatus.WHITE);
@@ -40,9 +41,10 @@ public class Graph implements Comparable<Graph> {
         for (Node node : nodeList) {
             node.setNodeStatus(NodeStatus.BLACK);
         }
+        return result;
     }
 
-    void DepthFirstSearch(){
+    public void DepthFirstSearch(){
 
         int currentNode = 0;
         Queue<Integer> nodeStack = new ArrayDeque();
@@ -90,17 +92,13 @@ public class Graph implements Comparable<Graph> {
         this.nodeList = nodeList;
     }
 
-
-
     @Override
     public int compareTo(Graph o) {
-        if(this.getNodeList().size() > o.getNodeList().size()){
+        if (this.getNodeList().size() > o.getNodeList().size()) {
+
             return 1;
-        }
-        if(this.getNodeList().size() < o.getNodeList().size()){
+        } else if (this.getNodeList().size() < o.getNodeList().size()) {
             return -1;
-        }
-        return 0;
+        } else return 0;
     }
 }
-
