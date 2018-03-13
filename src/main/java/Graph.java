@@ -25,7 +25,7 @@ public class Graph implements Comparable<Graph> {
         matrix.get(node1).set(node2, 0);
     }
 
-    /** Method to add a node to the graph. Take in to lists: the first one with the numbers
+    /** Method to add a node to the graph. Take in two lists: the first one with the numbers
      * of nodes, _which_ will be connected to the new node. The second one with the numbers
      * of nodes, _to which_ the new node will be connected. The lists contain numbers in natural
      * order (i.e. "1" means the node with the index [0]).
