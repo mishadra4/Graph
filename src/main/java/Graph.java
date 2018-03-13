@@ -25,11 +25,37 @@ public class Graph implements Comparable<Graph> {
         matrix.get(node1).set(node2, 0);
     }
 
-    /** Method to add a node to the graph. Take in a label of node.
-     * and two lists: the first one with the numbers of nodes, _which_ will be connected to
-     * the new node. The second one with the numbers of nodes, _to which_ the new node
-     * will be connected. The lists contain numbers in natural order (i.e. "1" means the
-     * node with the index [0]).
+    /*
+     * Method to add a node to the graph without any connections with other nodes.
+     * Take in a label of the node.
+     */
+    public void addNode(int label) {
+        // Create new Node
+        nodeList.add(new Node(label));
+
+        // Iterate over all existing nodes (except the new one).
+        for (int nodeIndex = 0; nodeIndex < nodeList.size() - 1; nodeIndex++) {
+            // Set the relation to the new node as "0".
+            matrix.get(nodeIndex).add(0);
+        }
+
+        // Create new List that will indicate to which nodes the new node is connected.
+        // This list will be added to the matrix List.
+        List<Integer> adjacentList = new ArrayList<>();
+
+        // Set all connections as "0".
+        for (int nodeIndex = 0; nodeIndex < nodeList.size(); nodeIndex++) {
+            adjacentList.add(0);
+        }
+        // Append the list to the matrix.
+        matrix.add(adjacentList);
+    }
+
+    /** Method to add a node to the graph with set connections with other nodes.
+     * Take in a label of the node and two lists: the first one with the numbers of
+     * nodes, _which_ will be connected to the new node. The second one with
+     * the numbers of nodes, _to which_ the new node will be connected. The lists
+     * contain numbers in natural order (i.e. "1" means the node with the index [0]).
      */
     public void addNode(int label, List<Integer> connectedFrom, List<Integer> connectedTo) {
         // Create new Node

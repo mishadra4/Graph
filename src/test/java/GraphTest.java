@@ -28,7 +28,7 @@ public class GraphTest {
     }
 
     /*
-     * Check if the 3rd node has nodeInfo "Node #3".
+     * Check if the 3rd node has lavel "3"
      */
     @Test
     public void nodeInfo() {
@@ -108,12 +108,27 @@ public class GraphTest {
     }
 
     /*
+     * Test for simple addNode().
+     */
+    @Test
+    public void addNode() {
+        graph.addNode(99);
+        System.out.println(graph);
+        assertEquals(5, graph.getNodeList().size());
+        assertEquals(Arrays.asList(0, 1, 0, 0, 0), graph.getMatrix().get(0));
+        assertEquals(Arrays.asList(0, 0, 0, 1, 0), graph.getMatrix().get(1));
+        assertEquals(Arrays.asList(1, 0, 0, 1, 0), graph.getMatrix().get(2));
+        assertEquals(Arrays.asList(1, 0, 1, 0, 0), graph.getMatrix().get(3));
+        assertEquals(Arrays.asList(0, 0, 0, 0, 0), graph.getMatrix().get(4));
+    }
+
+    /*
      * Test for addNode(). Check the new node's relations _to_ other nodes
      * in matrix's list. Also, check the newly established relation _from_
      * another node, which was existed before adding the new one.
      */
     @Test
-    public void addNode() {
+    public void addNodeWithLists() {
         List<Integer> connectedFrom = new ArrayList<>(Arrays.asList(2));
         List<Integer> connectedTo = new ArrayList<>(Arrays.asList(1, 2, 4));
         graph.addNode(5, connectedFrom, connectedTo);
@@ -122,6 +137,10 @@ public class GraphTest {
         assertEquals(5, graph.getNodeList().size());
     }
 
+    /*
+    * Test for addNode() with two empty lists as parameters indicating the connections
+    * with other nodes.
+    */
     @Test
     public void addNodeWithEmptyLists() {
         List<Integer> connectedFrom = new ArrayList<>();
