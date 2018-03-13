@@ -19,7 +19,7 @@ public class NodeTest {
      */
     @Test
     public void getNodeInfo() {
-        assertEquals("Node #42", node.getNodeInfo());
+        assertEquals(Integer.valueOf(42), node.getLabel());
     }
 
     /*
@@ -35,6 +35,6 @@ public class NodeTest {
      */
     @Test
     public void getSequenceNumber() {
-        assertEquals(Integer.valueOf(42), node.getSequenceNumber());
+        assertEquals(Integer.valueOf(42), node.getLabel());
     }
 }

@@ -32,7 +32,7 @@ public class GraphTest {
      */
     @Test
     public void nodeInfo() {
-        assertEquals("Node #3", graph.getNodeList().get(2).getNodeInfo());
+        assertEquals(Integer.valueOf(3), graph.getNodeList().get(2).getLabel());
     }
 
     /*
@@ -51,7 +51,7 @@ public class GraphTest {
     @Test
     public void bfsNode() {
         List<Node> foundNodes = graph.breadthFirstSearch();
-        assertEquals("Node #4", foundNodes.get(2).getNodeInfo());
+        assertEquals(Integer.valueOf(4), foundNodes.get(2).getLabel());
     }
 
     /*
@@ -87,7 +87,7 @@ public class GraphTest {
     @Test
     public void dfsNode() {
         List<Node> foundNodes = graph.depthFirstSearch();
-        assertEquals("Node #2", foundNodes.get(1).getNodeInfo());
+        assertEquals(Integer.valueOf(2), foundNodes.get(1).getLabel());
     }
 
     /*

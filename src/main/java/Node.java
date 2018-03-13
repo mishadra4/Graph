@@ -1,18 +1,10 @@
 public class Node {
     NodeStatus nodeStatus;
-    String nodeInfo = "Node #";
-    Integer sequenceNumber;
+    Integer label;
 
-    public Node(int sequenceNumber) {
+    public Node(int label) {
         nodeStatus = NodeStatus.BLACK;
-        this.nodeInfo += sequenceNumber;
-        this.sequenceNumber = sequenceNumber;
-    }
-
-    public Node(String nodeInfo, int sequenceNumber) {
-        nodeStatus = NodeStatus.BLACK;
-        this.nodeInfo =nodeInfo+ sequenceNumber;
-        this.sequenceNumber = sequenceNumber;
+        this.label = label;
     }
 
     public NodeStatus getNodeStatus() {
@@ -23,26 +15,20 @@ public class Node {
         this.nodeStatus = nodeStatus;
     }
 
-    public String getNodeInfo() {
-        return nodeInfo;
+
+    public Integer getLabel() {
+        return label;
     }
 
-    public void setNodeInfo(String nodeInfo) {
-        this.nodeInfo = nodeInfo;
-    }
-
-    public Integer getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(Integer sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
+    public void setLabel(Integer label) {
+        this.label = label;
     }
 
     @Override
     public String toString() {
         return "Node{" +
-                "nodeInfo='" + nodeInfo + '\'' +
+                "nodeStatus=" + nodeStatus +
+                ", label=" + label +
                 '}';
     }
 }
