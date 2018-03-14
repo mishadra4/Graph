@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Graph implements Comparable<Graph> {
@@ -23,7 +22,7 @@ public class Graph implements Comparable<Graph> {
     }
 
     public void removePath(Integer node1, Integer node2) {
-        matrix.get(node1-1).set(node2-1, 0);
+        matrix.get(node1 - 1).set(node2 - 1, 0);
     }
 
     /**
@@ -55,68 +54,119 @@ public class Graph implements Comparable<Graph> {
     /** Method to add a node to the graph with set connections with other nodes.
      * @param label label of new node.
      * @param connectedFrom list  with the numbers of nodes, _which_ will be
-     *                      connected tothe new node.
+     *                      connected to the new node.
      * @param connectedTo list with the numbers of nodes, _to which_ the new
      *                    node will be connected.
      * The lists contain numbers in natural order (i.e. "1" means the node with
      * the index [0]).
+     * The method uses addNodeWithWeight() with Maps as parameters.
      */
     public void addNode(int label, List<Integer> connectedFrom, List<Integer> connectedTo) {
+        Map<Integer, Integer> connectedFromMap = new LinkedHashMap<>();
+        // Convert the list to the Map with "1" as values
+        for (Integer nodeNumber : connectedFrom) {
+            connectedFromMap.put(nodeNumber, 1);
+        }
+        Map<Integer, Integer> connectedToMap = new LinkedHashMap<>();
+        // Convert the list to the Map with "1" as values
+        for (Integer nodeNumber : connectedTo) {
+            connectedToMap.put(nodeNumber, 1);
+        }
+        // Delegate to the method addNodeWithWeight
+        addNodeWithWeight(label, connectedFromMap, connectedToMap);
+    }
+
+    /** Method to add a node to the graph with set connections with other nodes
+     * and set weight.
+     * @param label label of new node.
+     * @param connectedFrom map with the numbers of nodes, _which_ will be
+     *                      connected to the new node, as keys and with
+     *                      weight as values.
+     * @param connectedTo map with the numbers of nodes, _to which_ the new
+     *                    node will be connected, as keys and with wight
+     *                    as values.
+     * The maps contain numbers in natural order (i.e. "1" means the node with
+     * the index [0]).
+     */
+    public void addNodeWithWeight(int label, Map<Integer, Integer> connectedFrom,
+                                  Map<Integer, Integer> connectedTo) {
         // Create new Node
         nodeList.add(new Node(label));
 
+        // Get list of connectedFrom map's keys
+        List<Integer> connectedFromMapKeys = new LinkedList<>(connectedFrom.keySet());
+
         // Iterate over all existing nodes (except the new one).
-        // If a node is present in connectedFrom list from parameters, the relation with the new node
-        // will be set as "1" in the matrix. Otherwise, as "0".
-        for (int nodeIndex = 0; nodeIndex < nodeList.size() - 1; nodeIndex++) {
-            if(!connectedFrom.isEmpty()){
-                for (Integer indexOfConnectedFromNode : connectedFrom) {
-                    if (nodeIndex == indexOfConnectedFromNode.intValue() - 1) {
-                        matrix.get(nodeIndex).add(1);
-                    } else{
-                        matrix.get(nodeIndex).add(0);
+        // If a node is present in connectedFrom's key list, the relation with it
+        // will be set in the matrix as weight parameter. Otherwise, as "0"
+        nodesIteration: for (int nodeIndex = 0; nodeIndex < matrix.size(); nodeIndex++) {
+            // Check if the connectedFrom map is not empty
+            if(!connectedFromMapKeys.isEmpty()){
+                for (int indexOfConnectedFromMapElement = 0;    // index of connectedFromMapKeys' element
+                     indexOfConnectedFromMapElement < connectedFromMapKeys.size();
+                     indexOfConnectedFromMapElement++) {
+                    // Get node's index from connectedFromMapKeys
+                    int indexOfConnectedFromNode = connectedFromMapKeys.get(indexOfConnectedFromMapElement) - 1;
+                    // If current nodeIndex of nodesIteration is present in connectedFrom map,
+                    // get the weight from map and set it as the relation
+                    if (nodeIndex == indexOfConnectedFromNode) {
+                        // Add weight
+                        matrix.get(nodeIndex).add(connectedFrom.get(indexOfConnectedFromNode + 1));
+                        // Remove the key, 'cause it has been already set
+                        connectedFromMapKeys.remove(indexOfConnectedFromMapElement);
+                        continue nodesIteration; //  Go to the next matrix's node in iteration
                     }
                 }
+                // If current iterated node hasn't been found in the connectedFrom map,
+                // set the relation as "0"
+                matrix.get(nodeIndex).add(0);
             }
-            // If connectedFrom is empty, set the relation from existing nodes to the new one as "0".
+            // If connectedFrom map is empty, set the relation from current iterated node
+            // to the new one as "0".
             else {
                 matrix.get(nodeIndex).add(0);
             }
         }
+
         // Create new List that will indicate to which nodes the new node is connected.
         // This list will be added to the matrix List.
         List<Integer> adjacentList = new ArrayList<>();
 
-        // Iterate over all Nodes and check if the index of a node is present in connectedTo list
-        // from parameters.
-        for (int nodeIndex = 0; nodeIndex < nodeList.size(); nodeIndex++) {
-            // If the connectedTo list is empty, set the relation with the current iterated node as "0".
-            if(connectedTo.isEmpty()){
+        // Get list of connectedTo map's keys
+        List<Integer> connectedToMapKeys = new LinkedList<>(connectedTo.keySet());
+
+        // Iterate over all Nodes and check if the index of a node is present in connectedTo map
+        connectedToIteration: for (int nodeIndex = 0; nodeIndex < matrix.size() + 1; nodeIndex++) {
+            // If the connectedTo is empty, set the relation with the current iterated node as "0".
+            if(connectedToMapKeys.isEmpty()){
                 adjacentList.add(0);
-                continue;
             }
-            // Otherwise, iterate over the connectedTo list and check if the node is present in this list.
-            // If present, set the relation as "1" and remove the node from connectedTo (it's unnecessary now,
-            // because we have set the relation already).
+            // Otherwise, iterate over the connectedTo's keys list and check if the node is present
+            // in this list. If so, set the relation as the value of weight from map and remove the
+            // node from connectedToMapKeys.
             else {
-                for (int indexOfConnectedToListElement = 0; // It's just index of connectedTo's element!
+                for (int indexOfConnectedToKeysElement = 0; // It's just an index of connectedTo's element!
                                                             // Not the index of a node.
-                     indexOfConnectedToListElement < connectedTo.size();
-                     indexOfConnectedToListElement++) {
+                     indexOfConnectedToKeysElement < connectedToMapKeys.size();
+                     indexOfConnectedToKeysElement++) {
                     // And here is the index of a node which should be connected to.
-                    int indexOfConnectedToNode = connectedTo.get(indexOfConnectedToListElement) - 1;
+                    int indexOfConnectedToNode = connectedToMapKeys.get(indexOfConnectedToKeysElement) - 1;
+                    // If current nodeIndex of connectedToIteration is present in connectedTo map,
+                    // get the weight from map and set it as the relation
                     if (nodeIndex == indexOfConnectedToNode) {
-                        adjacentList.add(1);
-                        connectedTo.remove(indexOfConnectedToListElement);
-                    } else {
-                        adjacentList.add(0);
+                        // Add the weight
+                        adjacentList.add(connectedTo.get(indexOfConnectedToNode + 1));
+                        // Remove the key, 'cause it has been already set
+                        connectedToMapKeys.remove(indexOfConnectedToKeysElement);
+                        continue connectedToIteration;  //  Go to the next matrix's node in iteration
                     }
-                    break;
                 }
+                adjacentList.add(0);
             }
         }
         // Finally, add the list with connectedTo relations to the matrix.
         matrix.add(adjacentList);
+
     }
 
     /**

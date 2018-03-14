@@ -151,6 +151,49 @@ public class GraphTest {
         assertEquals(5, graph.getNodeList().size());
     }
 
+    /**
+    * Test for addNodeWithWeight().
+    */
+    @Test
+    public void addNodeWithWeight() {
+        Map<Integer, Integer> connectedFrom = new LinkedHashMap<>();
+        connectedFrom.put(3, 333);
+        connectedFrom.put(2, 222);
+        connectedFrom.put(1, 11);
+
+        Map<Integer, Integer> connectedTo = new LinkedHashMap<>();
+        connectedTo.put(2, 95);
+        connectedTo.put(4, 12);
+        connectedTo.put(3, 8541);
+        connectedTo.put(1, 108);
+
+        graph.addNodeWithWeight(7, connectedFrom, connectedTo);
+
+        assertEquals(Arrays.asList(0, 1, 0, 0, 11), graph.getMatrix().get(0));
+        assertEquals(Arrays.asList(0, 0, 0, 1, 222), graph.getMatrix().get(1));
+        assertEquals(Arrays.asList(1, 0, 0, 1, 333), graph.getMatrix().get(2));
+        assertEquals(Arrays.asList(1, 0, 1, 0, 0), graph.getMatrix().get(3));
+        assertEquals(Arrays.asList(108, 95, 8541, 12, 0), graph.getMatrix().get(4));
+        assertEquals(5, graph.getMatrix().size());
+    }
+
+    /**
+     * Test for addNodeWithWeight() with empty Maps in parameters.
+     */
+    @Test
+    public void addNodeWithEmptyMaps() {
+        Map<Integer, Integer> connectedFrom = new LinkedHashMap<>();
+        Map<Integer, Integer> connectedTo = new LinkedHashMap<>();
+        graph.addNodeWithWeight(7, connectedFrom, connectedTo);
+
+        assertEquals(5, graph.getMatrix().size());
+        assertEquals(Arrays.asList(0, 1, 0, 0, 0), graph.getMatrix().get(0));
+        assertEquals(Arrays.asList(0, 0, 0, 1, 0), graph.getMatrix().get(1));
+        assertEquals(Arrays.asList(1, 0, 0, 1, 0), graph.getMatrix().get(2));
+        assertEquals(Arrays.asList(1, 0, 1, 0, 0), graph.getMatrix().get(3));
+        assertEquals(Arrays.asList(0, 0, 0, 0, 0), graph.getMatrix().get(4));
+    }
+
     /*
      * Test for removeNode(). Check if the method returns false whenever
      * it takes in the wrong parameter.
