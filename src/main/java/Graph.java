@@ -1,33 +1,72 @@
 import java.util.*;
 
+/**
+ * Graph based on adjacency matrix.
+ */
 public class Graph implements Comparable<Graph> {
-    private List<List<Integer>> matrix = new ArrayList<>();
-    private List<Node> nodeList = new ArrayList<>();
+    private List<List<Integer>> matrix; // adjacency matrix
+    private List<Node> nodeList;        // list of nodes
 
+    /**
+     * Empty constructor which initialize lists.
+     */
+    public Graph() {
+        matrix = new ArrayList<>();
+        nodeList = new ArrayList<>();
+    }
+
+    /**
+     * Creates nodeList based on the taken in adjacency matrix.
+     * @param matrix is a adjacency matrix with set relations of nodes
+     */
     public Graph(List<List<Integer>> matrix) {
+        this();
         this.matrix = matrix;
         for (int i = 0; i < matrix.size(); i++) {
             nodeList.add(new Node(i + 1));
         }
     }
 
-    // Constructor to create copies
-    public Graph(Graph graph) {
-        this.matrix = new ArrayList<>(graph.matrix);
-        this.nodeList = new ArrayList<>(graph.nodeList);
-    }
-
-    public void addPath(Integer node1, Integer node2, Integer weight) {
-        matrix.get(node1 - 1).set(node2 - 1, weight);
-    }
-
-    public void removePath(Integer node1, Integer node2) {
-        matrix.get(node1 - 1).set(node2 - 1, 0);
+    /**
+     * Add edge to the node.
+     * @param source is a starting node.
+     * @param destination is a destination node.
+     * @param weight is a weight of the relation.
+     */
+    public void addEdge(int source, int destination, int weight) {
+        matrix.get(source - 1).set(destination - 1, weight);
     }
 
     /**
-     * Method to add a node to the graph without any connections with other nodes.
-     * @param label label of new node.
+     * Remove edge of the node.
+     * @param source is a starting node.
+     * @param destination is a destination node.
+     */
+    public void remodeEdge(int source, int destination) {
+        matrix.get(source - 1).set(destination - 1, 0);
+    }
+
+    /**
+     * Return the weight of nodes' edge.
+     * @param source is a starting node.
+     * @param destination is a destination node.
+     */
+    public int getEdgeWeight(int source, int destination) {
+        return matrix.get(source - 1).get(destination - 1);
+    }
+
+    /**
+     * Check if the edge has relation.
+     * @param source is a starting node.
+     * @param destination is a destination node.
+     */
+    public boolean hasEdge(int source, int destination) {
+        return matrix.get(source - 1).get(destination - 1) != 0;
+    }
+
+    /**
+     * Add an isolated node to the graph.
+     * @param label is a label of new node.
      */
     public void addNode(int label) {
         // Create new Node
@@ -51,11 +90,11 @@ public class Graph implements Comparable<Graph> {
         matrix.add(adjacentList);
     }
 
-    /** Method to add a node to the graph with set connections with other nodes.
-     * @param label label of new node.
-     * @param connectedFrom list  with the numbers of nodes, _which_ will be
+    /** Add a node to the graph with set connections to other nodes.
+     * @param label is a label of the new node.
+     * @param connectedFrom is a list  with the numbers of nodes, _which_ will be
      *                      connected to the new node.
-     * @param connectedTo list with the numbers of nodes, _to which_ the new
+     * @param connectedTo is a list with the numbers of nodes, _to which_ the new
      *                    node will be connected.
      * The lists contain numbers in natural order (i.e. "1" means the node with
      * the index [0]).
@@ -76,13 +115,13 @@ public class Graph implements Comparable<Graph> {
         addNodeWithWeight(label, connectedFromMap, connectedToMap);
     }
 
-    /** Method to add a node to the graph with set connections with other nodes
+    /** Add a node to the graph with set connections with other nodes
      * and set weight.
-     * @param label label of new node.
-     * @param connectedFrom map with the numbers of nodes, _which_ will be
+     * @param label is a label of new node.
+     * @param connectedFrom is a map with the numbers of nodes, _which_ will be
      *                      connected to the new node, as keys and with
      *                      weight as values.
-     * @param connectedTo map with the numbers of nodes, _to which_ the new
+     * @param connectedTo is a map with the numbers of nodes, _to which_ the new
      *                    node will be connected, as keys and with wight
      *                    as values.
      * The maps contain numbers in natural order (i.e. "1" means the node with
@@ -171,7 +210,7 @@ public class Graph implements Comparable<Graph> {
 
     /**
      * Remove node from the graph.
-     * @param node the node to delete in natural order
+     * @param node is a node to delete in natural order
      */
     public boolean removeNode(int node) {
         // Return false if the input value is out of the bounds of nodeList.
@@ -192,6 +231,9 @@ public class Graph implements Comparable<Graph> {
         return true;
     }
 
+    /**
+     * Make search of all nodes using bread first search algorithm.
+     */
     public List<Node> breadthFirstSearch(){
         List<Node> result = new ArrayList<>(); // result list returned by method
         Queue<Integer> nodeQueue = new PriorityQueue<>();
@@ -220,6 +262,9 @@ public class Graph implements Comparable<Graph> {
         return result;
     }
 
+    /**
+     * Make search of all nodes using depth first search algorithm.
+     */
     public List<Node> depthFirstSearch() {
         List<Node> result = new ArrayList<>();
         int currentNode = 0;
@@ -249,7 +294,7 @@ public class Graph implements Comparable<Graph> {
         return result;
     }
     
-    /** Method to merge graph with other one and build new path between them. 
+    /** Merge graph with other one and build new path between them.
      * Modifies the object.
      * @param graph graph to merge
      * @param mergeNode1 node label from graph to build path from 
@@ -288,8 +333,7 @@ public class Graph implements Comparable<Graph> {
     	}
     	
     	//add Path
-    	addPath(mergeNode1, mergeNode2+oldSize, 1);
-    	
+    	addEdge(mergeNode1, mergeNode2+oldSize, 1);
     }
 
     public List<List<Integer>> getMatrix() {

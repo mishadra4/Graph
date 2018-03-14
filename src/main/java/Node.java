@@ -1,6 +1,6 @@
 public class Node {
     NodeStatus nodeStatus;
-    Integer label;
+    int label;
 
     public Node(int label) {
         nodeStatus = NodeStatus.BLACK;
