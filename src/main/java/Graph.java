@@ -42,7 +42,7 @@ public class Graph implements Comparable<Graph> {
      * @param source is a starting node.
      * @param destination is a destination node.
      */
-    public void remodeEdge(int source, int destination) {
+    public void removeEdge(int source, int destination) {
         matrix.get(source - 1).set(destination - 1, 0);
     }
 
