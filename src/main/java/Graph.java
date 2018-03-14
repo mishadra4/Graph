@@ -26,9 +26,9 @@ public class Graph implements Comparable<Graph> {
         matrix.get(node1-1).set(node2-1, 0);
     }
 
-    /*
+    /**
      * Method to add a node to the graph without any connections with other nodes.
-     * Take in a label of the node.
+     * @param label label of new node.
      */
     public void addNode(int label) {
         // Create new Node
@@ -53,10 +53,13 @@ public class Graph implements Comparable<Graph> {
     }
 
     /** Method to add a node to the graph with set connections with other nodes.
-     * Take in a label of the node and two lists: the first one with the numbers of
-     * nodes, _which_ will be connected to the new node. The second one with
-     * the numbers of nodes, _to which_ the new node will be connected. The lists
-     * contain numbers in natural order (i.e. "1" means the node with the index [0]).
+     * @param label label of new node.
+     * @param connectedFrom list  with the numbers of nodes, _which_ will be
+     *                      connected tothe new node.
+     * @param connectedTo list with the numbers of nodes, _to which_ the new
+     *                    node will be connected.
+     * The lists contain numbers in natural order (i.e. "1" means the node with
+     * the index [0]).
      */
     public void addNode(int label, List<Integer> connectedFrom, List<Integer> connectedTo) {
         // Create new Node
@@ -117,7 +120,8 @@ public class Graph implements Comparable<Graph> {
     }
 
     /**
-     * Remove node from the graph. Take in natural order of the node.
+     * Remove node from the graph.
+     * @param node the node to delete in natural order
      */
     public boolean removeNode(int node) {
         // Return false if the input value is out of the bounds of nodeList.
@@ -256,10 +260,16 @@ public class Graph implements Comparable<Graph> {
 
     @Override
     public String toString() {
-        return "Graph{" +
-                "matrix=" + matrix +
-                ", nodeList=" + nodeList +
-                '}';
+        StringBuilder result = new StringBuilder();
+        result.append("Adjacency matrix:\n");
+        for (List<Integer> matrixRow : matrix) {
+            result.append(matrixRow).append("\n");
+        }
+        result.append("\nNode list: \n");
+        for (Node node : nodeList) {
+            result.append(node.toString() + "\n");
+        }
+        return result.toString();
     }
 
     @Override

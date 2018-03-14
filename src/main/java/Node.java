@@ -27,8 +27,8 @@ public class Node {
     @Override
     public String toString() {
         return "Node{" +
-                "nodeStatus=" + nodeStatus +
-                ", label=" + label +
+                "label=" + label +
+                ", nodeStatus=" + nodeStatus +
                 '}';
     }
 }

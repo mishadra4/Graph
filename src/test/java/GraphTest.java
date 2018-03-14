@@ -190,4 +190,34 @@ public class GraphTest {
         graph.removeNode(2);
         assertEquals(3, graph.getNodeList().size());
     }
+
+    /*
+    * Test for merge().
+    */
+    @Test
+    public void mergeGraphs() {
+        // Create matrix and use it to create new graph
+        List<List<Integer>> matrix = new ArrayList<>();
+        matrix.add(new ArrayList<>(Arrays.asList(0,0,1)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,0)));
+        matrix.add(new ArrayList<>(Arrays.asList(1,0,0)));
+        Graph newGraph = new Graph(matrix);
+
+        graph.merge(newGraph,1, 1);
+        // Check the 1st, 4th and 6th rows of the matrix
+        assertEquals(Arrays.asList(0, 1, 0, 0, 1, 0, 0), graph.getMatrix().get(0));
+        assertEquals(Arrays.asList(1, 0, 1, 0, 0, 0, 0), graph.getMatrix().get(3));
+        assertEquals(Arrays.asList(0, 0, 0, 0, 1, 0, 0), graph.getMatrix().get(6));
+        assertEquals(7, graph.getMatrix().size());
+    }
+
+    /*
+    * Test for merge() with merging empty graph.
+    */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void mergeEmptyGraph() {
+        List<List<Integer>> matrix = new ArrayList<>();
+        Graph newGraph = new Graph(matrix);
+        graph.merge(newGraph, 1, 1);
+    }
 }
